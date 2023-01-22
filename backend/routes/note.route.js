@@ -55,6 +55,8 @@ noteRouter.delete('/delete/:id', async (req, res) => {
     }
 })
 
+// noteRouter.post
+
 module.exports = {
     noteRouter
 }

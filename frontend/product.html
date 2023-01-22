@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./product.css" />
+    <!-- <link rel="stylesheet" href="./styles/index.css" /> -->
+    <title>Document</title>
+    <style>
+      #product {
+        display: flex;
+        justify-content: space-between;
+        width: 90%;
+        margin: auto;
+        margin-top: 30px;
+        margin-bottom: 50px;
+      }
+      #lhs {
+        flex: 2;
+        margin-right: 10px;
+      }
+      #rhs {
+        flex: 7;
+      }
+      #top {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      #container {
+        border: 2px solid red;
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 10px;
+      }
+      #container div {
+        border: 2px solid red;
+      }
+      #container img {
+        width: 100%;
+      }
+      #category h4,
+      h3,
+      p {
+        margin-bottom: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="nav-container">
+        <!-- navbar -->
+      </div>
+    </header>
+    <div id="product">
+      <div id="lhs">
+        <div id="category">
+          <h2 id="category">Category</h2>
+          <h3 id="men">Men's</h3>
+          <p id="clothing">Clothing <span id="cuts"></span></p>
+          <p id="footwear">Footwear<span id="exotic"></span></p>
+          <p id="grooming">Men's Grooming <span id="flower"></span></p>
+          <p id="bottom">Bottom Wear <span id="fresh"></span></p>
+          <p id="suits">Suits, Blazers <span id="fveg"></span></p>
+          <p id="jackets">Jackets<span id="herbs"></span></p>
+          <p id="sweatshirts">Sweatshirts<span id="organic"></span></p>
+        </div>
+
+        <div id="brand">
+          <h2 id="bnd">Brand</h2>
+          <div>
+            <input type="checkbox" name="" class="adidas" id="adidas" />
+            <p>ADIDAS</p>
+          </div>
+          <div>
+            <input type="checkbox" name="" class="adidas" id="puma" />
+            <p>PUMA</p>
+          </div>
+          <div>
+            <input type="checkbox" name="" class="adidas" id="nike" />
+            <p>NIKE</p>
+          </div>
+          <div>
+            <input type="checkbox" name="" class="adidas" id="beingHuman" />
+            <p>BEING HUMAN</p>
+          </div>
+          <div>
+            <input type="checkbox" name="" class="adidas" id="tommyHilfiger" />
+            <p>TOMMY HILFIGER</p>
+          </div>
+        </div>
+
+        <div id="price">
+          <h2 id="prc">Price</h2>
+          <div>
+            <input type="checkbox" name="" class="price_lhs" id="p20" />
+            <p>Less than Rs 2000</p>
+          </div>
+          <div>
+            <input type="checkbox" name="" class="price_lhs" id="p21_50" />
+            <p>Rs 2100 to Rs 5000</p>
+          </div>
+          <div>
+            <input type="checkbox" name="" class="price_lhs" id="p51_100" />
+            <p>Rs 5100 to Rs 10,000</p>
+          </div>
+          <div>
+            <input type="checkbox" name="" class="price_lhs" id="p101_200" />
+            <p>Rs 10,100 to Rs 20,000</p>
+          </div>
+          <div>
+            <input type="checkbox" name="" class="price_lhs" id="p201_500" />
+            <p>Rs 20,100 to Rs 50,000</p>
+          </div>
+          <div>
+            <input type="checkbox" name="" class="price_lhs" id="p501" />
+            <p>More than Rs 50,100</p>
+          </div>
+        </div>
+
+        <div id="discount">
+          <h2 id="dis">Discount</h2>
+          <div>
+            <input type="checkbox" name="" class="discount_lhs" id="d10_15" />
+            <p>10% - 15%</p>
+          </div>
+          <div>
+            <input type="checkbox" name="" class="discount_lhs" id="d15_25" />
+            <p>15% - 25%</p>
+          </div>
+          <div>
+            <input type="checkbox" name="" class="discount_lhs" id="d25" />
+            <p>More than 25%</p>
+          </div>
+        </div>
+      </div>
+
+      <div id="rhs">
+        <div id="top">
+          <h2 id="heading">Clothing<span id="f&v"></span></h2>
+          <select name="popularty" id="sorty">
+            <option id="popularity" value="popularit">popularity</option>
+            <option id="sortlth" value="Price-Low to High">
+              Price-Low to High
+            </option>
+            <option id="sorthtl" value="Price-High to Low">
+              Price-High to Low
+            </option>
+            <option id="alpha" value="alphabetical">Alphabetical</option>
+          </select>
+        </div>
+
+        <div id="container"></div>
+      </div>
+    </div>
+  </body>
+</html>
+
+<script type="module" src="product.js"></script>
+
+<script>
+  const url = "  http://localhost:3000/tshirts";
+
+  const main_url = "  http://localhost:3000";
+
+  let heading = document.getElementById("heading");
+
+  let getData = async () => {
+    let base_url = `${url}`;
+    let res = await fetch(`${url}`);
+    let data = await res.json();
+    console.log(data);
+    let dataLength = data.length;
+    displayData(data, base_url, dataLength);
+  };
+  getData();
+
+  function displayData(data) {
+    let main_div = document.getElementById("container");
+    main_div.innerHTML = "";
+
+    data.forEach(function (el) {
+      let div = document.createElement("div");
+
+      let img = document.createElement("img");
+      img.src = el.image;
+
+      let brand = document.createElement("p");
+      brand.innerText = el.brand;
+
+      let detail = document.createElement("p");
+      detail.innerText = el.detail;
+
+      let price = document.createElement("p");
+      price.innerText = el.price;
+
+      let add = document.createElement("button");
+      add.setAttribute("class", "add");
+      add.innerText = "ADD TO CART";
+
+      add.onclick = async () => {
+        let res = await fetch(`${main_url}/cart`, {
+          method: "POST",
+          body: JSON.stringify(el),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+        let data = await res.json();
+        console.log(data);
+      };
+
+      div.append(img, brand, detail, price, add);
+      main_div.append(div);
+    });
+  }
+
+  let footwear = document.getElementById("footwear");
+  footwear.onclick = async () => {
+    let base_url = `${main_url}/footwear`;
+    let res = await fetch(`${main_url}/footwear`);
+    let data = await res.json();
+    console.log(data);
+    displayData(data, base_url);
+    heading.innerText = `Footwear (${data.length})`;
+  };
+
+  let grooming = document.getElementById("grooming");
+  grooming.onclick = async () => {
+    let base_url = `${main_url}/grooming`;
+    let res = await fetch(`${main_url}/grooming`);
+    let data = await res.json();
+    console.log(data);
+    displayData(data, base_url);
+    heading.innerText = `Grooming (${data.length})`;
+  };
+
+  let bottom = document.getElementById("bottom");
+  bottom.onclick = async () => {
+    let base_url = `${main_url}/bottom`;
+    let res = await fetch(`${main_url}/bottom`);
+    let data = await res.json();
+    console.log(data);
+    displayData(data, base_url);
+    heading.innerText = `Bottom Wear (${data.length})`;
+  };
+
+  let suits = document.getElementById("suits");
+  suits.onclick = async () => {
+    let base_url = `${main_url}/suits`;
+    let res = await fetch(`${main_url}/suits`);
+    let data = await res.json();
+    console.log(data);
+    displayData(data, base_url);
+    heading.innerText = `Suits (${data.length})`;
+  };
+
+  let jackets = document.getElementById("jackets");
+  jackets.onclick = async () => {
+    let base_url = `${main_url}/jackets`;
+    let res = await fetch(`${main_url}/jackets`);
+    let data = await res.json();
+    console.log(data);
+    displayData(data, base_url);
+    heading.innerText = `Jackets (${data.length})`;
+  };
+
+  let sweatshirts = document.getElementById("sweatshirts");
+  sweatshirts.onclick = async () => {
+    let base_url = `${main_url}/sweatshirts`;
+    let res = await fetch(`${main_url}/sweatshirts`);
+    let data = await res.json();
+    console.log(data);
+    displayData(data, base_url);
+    heading.innerText = `Sweatshirts (${data.length})`;
+  };
+
+  adidas.onchange = async (event) => {
+    if (event.target.checked) {
+      let base_url = `${url}?brand_like=adidas`;
+      let result = await fetch(`${url}?brand_like=adidas`);
+      let fdata = await result.json();
+      displayData(fdata, base_url);
+      if (fdata.length == 0) {
+        container.innerHTML = `<h1>No Item Found</h1>`;
+      }
+    } else {
+      getData();
+    }
+  };
+
+  adidas.onchange = async (event) => {
+    if (event.target.ckecked) {
+      let base_url = `${url}?brand=adidas`;
+      let result = await fetch(`${url}?brand=adidas`);
+      let fetchData = await result.json();
+      displayData(fetchData, base_url);
+      if (fetchData.length == 0) {
+        container.innerHTML = `<h1>No Item Found</h1>`;
+      }
+    } else {
+      getData();
+    }
+  };
+
+  let sorty = document.getElementById("sorty");
+  sorty.onchange = async () => {
+    let base_url;
+    if (sorty.value == "Price-Low To High") {
+      base_url = `${url}?_sort=price&_order=asc`;
+      let res = await fetch(`${url}?_sort=price&_order=asc`);
+      let data = await res.json();
+      displayData(data, base_url);
+    } else if (sorty.value == "Price-High To Low") {
+      base_url = `${url}?_sort=price&_order=desc`;
+      let res = await fetch(`${url}?_sort=price&_order=desc`);
+      let data = await res.json();
+      displayData(data, base_url);
+    } else {
+      getData();
+    }
+  };
+</script>
