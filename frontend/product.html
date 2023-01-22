@@ -29,16 +29,19 @@
         align-items: center;
       }
       #container {
-        border: 2px solid red;
+        /* border: 2px solid red; */
         display: grid;
         grid-template-columns: repeat(4, 1fr);
         gap: 10px;
       }
-      #container div {
-        border: 2px solid red;
-      }
       #container img {
         width: 100%;
+      }
+      #container p {
+        text-align: center;
+      }
+      #container button {
+        text-align: center;
       }
       #category h4,
       h3,
@@ -82,11 +85,11 @@
             <p>NIKE</p>
           </div>
           <div>
-            <input type="checkbox" name="" class="adidas" id="beingHuman" />
+            <input type="checkbox" name="" class="adidas" id="bh" />
             <p>BEING HUMAN</p>
           </div>
           <div>
-            <input type="checkbox" name="" class="adidas" id="tommyHilfiger" />
+            <input type="checkbox" name="" class="adidas" id="th" />
             <p>TOMMY HILFIGER</p>
           </div>
         </div>
@@ -160,7 +163,7 @@
 <script type="module" src="product.js"></script>
 
 <script>
-  const url = "  http://localhost:3000/tshirts";
+  const url = "  http://localhost:3000/clothing";
 
   const main_url = "  http://localhost:3000";
 
@@ -215,6 +218,16 @@
       main_div.append(div);
     });
   }
+
+  let clothing = document.getElementById("clothing");
+  clothing.onclick = async () => {
+    let base_url = `${main_url}/clothing`;
+    let res = await fetch(`${main_url}/clothing`);
+    let data = await res.json();
+    console.log(data);
+    displayData(data, base_url);
+    heading.innerText = `T-Shirts (${data.length})`;
+  };
 
   let footwear = document.getElementById("footwear");
   footwear.onclick = async () => {
@@ -290,13 +303,13 @@
     }
   };
 
-  adidas.onchange = async (event) => {
-    if (event.target.ckecked) {
-      let base_url = `${url}?brand=adidas`;
-      let result = await fetch(`${url}?brand=adidas`);
-      let fetchData = await result.json();
-      displayData(fetchData, base_url);
-      if (fetchData.length == 0) {
+  puma.onchange = async (event) => {
+    if (event.target.checked) {
+      let base_url = `${url}?brand_like=puma`;
+      let result = await fetch(`${url}?brand_like=puma`);
+      let fdata = await result.json();
+      displayData(fdata, base_url);
+      if (fdata.length == 0) {
         container.innerHTML = `<h1>No Item Found</h1>`;
       }
     } else {
@@ -304,21 +317,91 @@
     }
   };
 
-  let sorty = document.getElementById("sorty");
-  sorty.onchange = async () => {
-    let base_url;
-    if (sorty.value == "Price-Low To High") {
-      base_url = `${url}?_sort=price&_order=asc`;
-      let res = await fetch(`${url}?_sort=price&_order=asc`);
-      let data = await res.json();
-      displayData(data, base_url);
-    } else if (sorty.value == "Price-High To Low") {
-      base_url = `${url}?_sort=price&_order=desc`;
-      let res = await fetch(`${url}?_sort=price&_order=desc`);
-      let data = await res.json();
-      displayData(data, base_url);
+  nike.onchange = async (event) => {
+    if (event.target.checked) {
+      let base_url = `${url}?brand_like=nike`;
+      let result = await fetch(`${url}?brand_like=nike`);
+      let fdata = await result.json();
+      displayData(fdata, base_url);
+      if (fdata.length == 0) {
+        container.innerHTML = `<h1>No Item Found</h1>`;
+      }
     } else {
       getData();
     }
   };
+
+  bh.onchange = async (event) => {
+    if (event.target.checked) {
+      let base_url = `${url}?brand_like=bh`;
+      let result = await fetch(`${url}?brand_like=bh`);
+      let fdata = await result.json();
+      displayData(fdata, base_url);
+      if (fdata.length == 0) {
+        container.innerHTML = `<h1>No Item Found</h1>`;
+      }
+    } else {
+      getData();
+    }
+  };
+
+  th.onchange = async (event) => {
+    if (event.target.checked) {
+      let base_url = `${url}?brand_like=th`;
+      let result = await fetch(`${url}?brand_like=th`);
+      let fdata = await result.json();
+      displayData(fdata, base_url);
+      if (fdata.length == 0) {
+        container.innerHTML = `<h1>No Item Found</h1>`;
+      }
+    } else {
+      getData();
+    }
+  };
+
+  // window.addEventListener("load", () => {
+  //   getData();
+
+  //   document.getElementById("sortlth").onclick = () => {
+  //     sortLowToHigh();
+  //   };
+  // });
+
+  // sortlth;
+
+  // let sortLowToHigh = async () => {
+  //   let res = await fetch(`${url}?_sort=price&_order=asc`);
+  //   res = await res.json();
+  //   displayData(res);
+  // };
+
+  let sortlth = document.getElementById("sortlth");
+  sortlth.onchange = async () => {
+    if (sortlth.value == "Price-Low To High") {
+      let base_url = `${url}?_sort=price&_order=asc`;
+      let result = await fetch(`${url}?_sort=price&_order=asc`);
+      let fdata = await result.json();
+      displayData(fdata, base_url);
+    } else {
+      getData();
+    }
+  };
+
+  // let sortlth = document.getElementById("sortlth");
+  // sortlth.onchange = async (event) => {
+  //   let base_url;
+  //   if (sortlth.value == "Price-Low To High") {
+  //     base_url = `${url}?_sort=price&_order=asc`;
+  //     let res = await fetch(`${url}?_sort=price&_order=asc`);
+  //     res = await res.json();
+  //     displayData(res);
+  //   } else if (sorty.value == "Price-High To Low") {
+  //     base_url = `${url}?_sort=price&_order=desc`;
+  //     let res = await fetch(`${url}?_sort=price&_order=desc`);
+  //     let data = await res.json();
+  //     displayData(data, base_url);
+  //   } else {
+  //     getData();
+  //   }
+  // };
 </script>
